@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import '../../features/authentication/presentation/login_screen.dart';
 import '../db/local_auth_db.dart';
 
 // Placeholder widgets for initial setup. 
 // These will be replaced by actual feature presentation screens in later steps.
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Login Screen')));
-}
+
 class StudentDashboard extends StatelessWidget {
   const StudentDashboard({super.key});
   @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Student Dashboard')));
