@@ -4,8 +4,8 @@ import '../theme/app_theme.dart';
 
 class GlassContainer extends StatelessWidget {
   final Widget child;
-  final double width;
-  final double height;
+  final double? width;   // Changed to nullable
+  final double? height;  // Changed to nullable
   final double blur;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -14,8 +14,8 @@ class GlassContainer extends StatelessWidget {
   const GlassContainer({
     super.key,
     required this.child,
-    this.width = double.infinity,
-    this.height = double.infinity,
+    this.width,          // Removed double.infinity default
+    this.height,         // Removed double.infinity default
     this.blur = 10.0,
     this.padding,
     this.margin,
@@ -44,18 +44,18 @@ class GlassContainer extends StatelessWidget {
           height: height,
           padding: padding ?? const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: AppTheme.deepTeal.withOpacity(0.15),
+            color: AppTheme.deepTeal.withValues(alpha: 0.15),
             borderRadius: br,
             border: Border.all(
-              color: AppTheme.mintGlow.withOpacity(0.2),
+              color: AppTheme.mintGlow.withValues(alpha: 0.2),
               width: 1.5,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppTheme.pureWhite.withOpacity(0.05),
-                AppTheme.deepTeal.withOpacity(0.1),
+                AppTheme.pureWhite.withValues(alpha: 0.05),
+                AppTheme.deepTeal.withValues(alpha: 0.1),
               ],
             ),
           ),
