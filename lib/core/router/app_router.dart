@@ -1,38 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../features/authentication/presentation/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import '../db/local_auth_db.dart';
 
-// Placeholder widgets for initial setup. 
-// These will be replaced by actual feature presentation screens in later steps.
-
-class StudentDashboard extends StatelessWidget {
-  const StudentDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Student Dashboard')));
-}
-class TeacherDashboard extends StatelessWidget {
-  const TeacherDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Teacher Dashboard')));
-}
-class PrincipalAssistantDashboard extends StatelessWidget {
-  const PrincipalAssistantDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Assistant Principal Dashboard')));
-}
-class PrincipalDashboard extends StatelessWidget {
-  const PrincipalDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Principal Dashboard')));
-}
-class AccountingDashboard extends StatelessWidget {
-  const AccountingDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Accounting Dashboard')));
-}
-class HRDashboard extends StatelessWidget {
-  const HRDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('HR Dashboard')));
-}
-class AlumniDashboard extends StatelessWidget {
-  const AlumniDashboard({super.key});
-  @override Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Alumni Dashboard')));
-}
+// Importing all 7 role-based dashboards
+import '../../features/authentication/presentation/login_screen.dart';
+import '../../features/dashboard_student/presentation/student_dashboard.dart';
+import '../../features/dashboard_teacher/presentation/teacher_dashboard.dart';
+import '../../features/management_admin/presentation/assistant_dashboard.dart';
+import '../../features/management_admin/presentation/principal_dashboard.dart';
+import '../../features/management_finance/presentation/accounting_dashboard.dart';
+import '../../features/management_hr/presentation/hr_dashboard.dart';
+import '../../features/portal_alumni/presentation/alumni_dashboard.dart';
 
 class AppRouter {
   final LocalAuthDb authDb;
@@ -41,17 +19,15 @@ class AppRouter {
 
   late final GoRouter router = GoRouter(
     initialLocation: '/login',
-    refreshListenable: _GoRouterRefreshStream(), // Listen to auth state changes here if using Riverpod/Bloc
+    refreshListenable: _GoRouterRefreshStream(),
     redirect: (BuildContext context, GoRouterState state) {
       final bool loggedIn = authDb.isLoggedIn;
       final bool loggingIn = state.matchedLocation == '/login';
 
-      // If not logged in and not on login page, force to login
       if (!loggedIn && !loggingIn) {
         return '/login';
       }
 
-      // If logged in but trying to access login page, redirect to correct dashboard
       if (loggedIn && loggingIn) {
         final role = authDb.userRole;
         switch (role) {
@@ -62,11 +38,11 @@ class AppRouter {
           case 'accounting': return '/accounting';
           case 'hr': return '/hr';
           case 'alumni': return '/alumni';
-          default: return '/login'; // Fallback
+          default: return '/login';
         }
       }
 
-      return null; // No redirect needed
+      return null;
     },
     routes: [
       GoRoute(
@@ -105,5 +81,4 @@ class AppRouter {
   );
 }
 
-// Helper to refresh router on state change (can be expanded later with StreamController)
 class _GoRouterRefreshStream extends ChangeNotifier {}

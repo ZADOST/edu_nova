@@ -1,3 +1,4 @@
+import 'dart:ui'; // FIX: Imported for ImageFilter
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      AppTheme.deepTeal.withOpacity(0.8),
+                      AppTheme.deepTeal.withValues(alpha: 0.8), // FIX: Updated opacity
                       AppTheme.darkCharcoal,
                     ],
                   ),
@@ -74,7 +75,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                       top: -50,
                       child: CircleAvatar(
                         radius: 100,
-                        backgroundColor: AppTheme.mintGlow.withOpacity(0.05),
+                        backgroundColor: AppTheme.mintGlow.withValues(alpha: 0.05), // FIX: Updated opacity
                       ),
                     ),
                     Positioned(
@@ -173,7 +174,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.darkCharcoal.withOpacity(0.5),
+              color: AppTheme.darkCharcoal.withValues(alpha: 0.5), // FIX: Updated opacity
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -182,19 +183,18 @@ class _StudentDashboardState extends State<StudentDashboard> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // FIX: Now recognized because of dart:ui
             child: BottomNavigationBar(
-              backgroundColor: AppTheme.deepTeal.withOpacity(0.8),
+              backgroundColor: AppTheme.deepTeal.withValues(alpha: 0.8), // FIX: Updated opacity
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               selectedItemColor: AppTheme.mintGlow,
-              unselectedItemColor: AppTheme.pureWhite.withOpacity(0.5),
+              unselectedItemColor: AppTheme.pureWhite.withValues(alpha: 0.5), // FIX: Updated opacity
               currentIndex: _selectedIndex,
               onTap: (index) {
                 setState(() {
                   _selectedIndex = index;
                 });
-                // Later, we will add navigation logic here to switch between Home/Schedule/Profile
               },
               items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
@@ -216,9 +216,9 @@ class _StudentDashboardState extends State<StudentDashboard> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.deepTeal.withOpacity(0.3),
+            color: AppTheme.deepTeal.withValues(alpha: 0.3), // FIX: Updated opacity
             shape: BoxShape.circle,
-            border: Border.all(color: AppTheme.mintGlow.withOpacity(0.3), width: 1),
+            border: Border.all(color: AppTheme.mintGlow.withValues(alpha: 0.3), width: 1), // FIX: Updated opacity
           ),
           child: Icon(icon, color: AppTheme.mintGlow, size: 28),
         ),
@@ -226,7 +226,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
         Text(
           label,
           style: TextStyle(
-            color: AppTheme.pureWhite.withOpacity(0.8),
+            color: AppTheme.pureWhite.withValues(alpha: 0.8), // FIX: Updated opacity
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
