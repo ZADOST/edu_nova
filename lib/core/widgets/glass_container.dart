@@ -4,8 +4,8 @@ import '../theme/app_theme.dart';
 
 class GlassContainer extends StatelessWidget {
   final Widget child;
-  final double? width;   // Changed to nullable
-  final double? height;  // Changed to nullable
+  final double? width;
+  final double? height;
   final double blur;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -14,8 +14,8 @@ class GlassContainer extends StatelessWidget {
   const GlassContainer({
     super.key,
     required this.child,
-    this.width,          // Removed double.infinity default
-    this.height,         // Removed double.infinity default
+    this.width,
+    this.height,
     this.blur = 10.0,
     this.padding,
     this.margin,

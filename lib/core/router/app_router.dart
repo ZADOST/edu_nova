@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../db/local_auth_db.dart';
+import '../theme/app_theme.dart';
 
 // Importing all 7 role-based dashboards
 import '../../features/authentication/presentation/login_screen.dart';
@@ -23,12 +24,16 @@ class AppRouter {
     redirect: (BuildContext context, GoRouterState state) {
       final bool loggedIn = authDb.isLoggedIn;
       final bool loggingIn = state.matchedLocation == '/login';
+      final bool isRoot = state.matchedLocation == '/'; 
 
+      // If not logged in and not on login page, force to login
       if (!loggedIn && !loggingIn) {
         return '/login';
       }
 
-      if (loggedIn && loggingIn) {
+      // If logged in but trying to access the login page OR the root '/' path, 
+      // intercept and redirect to the correct dashboard based on their role.
+      if (loggedIn && (loggingIn || isRoot)) {
         final role = authDb.userRole;
         switch (role) {
           case 'student': return '/student';
@@ -38,12 +43,39 @@ class AppRouter {
           case 'accounting': return '/accounting';
           case 'hr': return '/hr';
           case 'alumni': return '/alumni';
-          default: return '/login';
+          default: return '/login'; // Fallback
         }
       }
 
-      return null;
+      return null; // No redirect needed
     },
+    // Custom 404 Error Screen
+    errorBuilder: (context, state) => Scaffold(
+      backgroundColor: AppTheme.darkCharcoal,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, color: Colors.redAccent, size: 80),
+            const SizedBox(height: 16),
+            const Text(
+              '404 - System Route Not Found',
+              style: TextStyle(color: AppTheme.pureWhite, fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'The requested module could not be located.',
+              style: TextStyle(color: AppTheme.pureWhite.withValues(alpha: 0.6), fontSize: 14),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () => context.go('/'),
+              child: const Text('Return to Dashboard'),
+            ),
+          ],
+        ),
+      ),
+    ),
     routes: [
       GoRoute(
         path: '/login',

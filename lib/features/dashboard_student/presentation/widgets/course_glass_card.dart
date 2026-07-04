@@ -46,7 +46,7 @@ class CourseGlassCard extends StatelessWidget {
           Text(
             'Instructor: $instructor',
             style: TextStyle(
-              color: AppTheme.pureWhite.withOpacity(0.7),
+              color: AppTheme.pureWhite.withValues(alpha: 0.7),
               fontSize: 14,
             ),
           ),
@@ -67,7 +67,7 @@ class CourseGlassCard extends StatelessWidget {
                 height: 6,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppTheme.darkCharcoal.withOpacity(0.5),
+                  color: AppTheme.darkCharcoal.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -80,7 +80,7 @@ class CourseGlassCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.mintGlow.withOpacity(0.5),
+                        color: AppTheme.mintGlow.withValues(alpha: 0.5),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
